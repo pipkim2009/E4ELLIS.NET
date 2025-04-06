@@ -6,7 +6,7 @@ let timeText = ''
 setInterval(timeSpentRefresh, 1)
 
 function timeSpentRefresh() {
-    timeSpent = Math.floor(((new Date) - startTime) / 1000) + 46493
+    timeSpent = Math.floor(((new Date) - startTime) / 1000)
     if (timeSpent < 60) {
         timeText = `${timeSpent} seconds`
     } else if (timeSpent < 3600) {
