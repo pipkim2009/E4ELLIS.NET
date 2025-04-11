@@ -11,12 +11,12 @@ let usedCards = []
 
 let player = {
     score: 0,
-    cards: 0
+    cards: []
 }
 
 let system = {
     score: 0,
-    cards: 0
+    cards: []
 }
 
 function hit(user) {
@@ -24,6 +24,7 @@ function hit(user) {
     let suit = suits[Math.floor(Math.random() * suits.length)]
 
     let card = ""
+
     card = `${value}${suit}.png`
     
     if (usedCards.includes(card)) {
@@ -32,34 +33,57 @@ function hit(user) {
         usedCards.push(card)
     }
 
+    let points = 0
     // card is number
-    if (value != "a" && value != "j" && value != "q" && value != "k") {
+    if (!isNaN(parseInt(value))) {
         user.score += parseInt(value)
     }
     // card is royal
     else if (value != "a") {
-        user.score += 10
+        points = 10
     }
     // card is ace
     else {
         if (user.score <= 10) {
-            user.score += 11
+            points = 11
         } else {
-            user.score += 1
+            points = 1
         }
     }
 
-    user.cards++
+    user.score += points
 
-    return(`<img src='./assets/images/cards/${card}' class='w-25'/>`)
+    return (card)
+}
+
+function render() {
+    playerCards.innerHTML = ''
+    playerScore.textContent = `player: ${player.score}`
+    for (let i = 0; i < player.cards.length; i++) {
+        playerCards.innerHTML += `<img src='./assets/images/cards/${player.cards[i]}' class='w-25'/>`
+    }
+
+    systemCards.innerHTML = ''
+    systemScore.textContent = `system: ${system.score}`
+    for (let i = 0; i < system.cards.length; i++) {
+        if (i === 0) {
+            systemCards.innerHTML += `<img src='./assets/images/cards/hidden-card.png' class='w-25'/>`
+        } else {
+            systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[i]}' class='w-25'/>`
+        }
+    }
 }
 
 hitButton.addEventListener("click", function() {
-    playerCards.innerHTML += `${hit(player)}`
-    playerScore.textContent = `player: ${player.score}`
+    player.cards.push(hit(player))
+    render()
 })
 
-playerCards.innerHTML = `${hit(player)}${hit(player)}`
-systemCards.innerHTML = `${hit(system)}${hit(system)}`
-playerScore.textContent = `player: ${player.score}`
-systemScore.textContent = `system: ${system.score}`
+player.cards.push(hit(player))
+player.cards.push(hit(player))
+system.cards.push(hit(system))
+system.cards.push(hit(system))
+
+render()
+
+systemScore.innerHTML += ` -- ${system.cards}`
