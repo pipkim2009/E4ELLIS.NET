@@ -4,6 +4,7 @@ const hitButton = document.getElementById("hit-button")
 const standButton = document.getElementById("stand-button")
 const playerCards = document.getElementById("player-cards")
 const systemCards = document.getElementById("system-cards")
+const alertContainer = document.getElementById("alert-container")
 
 const values = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "10", "j", "q", "k"]
 const suits = ["c", "d", "h", "s"]
@@ -16,6 +17,7 @@ let player = {
 
 let system = {
     score: 0,
+    hiddenPoints: 0,
     cards: []
 }
 
@@ -36,7 +38,7 @@ function hit(user) {
     let points = 0
     // card is number
     if (!isNaN(parseInt(value))) {
-        user.score += parseInt(value)
+        points += parseInt(value)
     }
     // card is royal
     else if (value != "a") {
@@ -53,10 +55,23 @@ function hit(user) {
 
     user.score += points
 
-    return (card)
+    if ((user === system) && (system.cards.length != 0)) {
+        system.hiddenPoints += points
+    }
+
+    user.cards.push(card)
 }
 
-function render() {
+function stand() {
+    if (system.score < 17) {
+        hit(system)
+        stand()
+    } else {
+        render(true)
+    }
+}
+
+function render(stand) {
     playerCards.innerHTML = ''
     playerScore.textContent = `player: ${player.score}`
     for (let i = 0; i < player.cards.length; i++) {
@@ -64,26 +79,30 @@ function render() {
     }
 
     systemCards.innerHTML = ''
-    systemScore.textContent = `system: ${system.score}`
-    for (let i = 0; i < system.cards.length; i++) {
-        if (i === 0) {
-            systemCards.innerHTML += `<img src='./assets/images/cards/hidden-card.png' class='w-25'/>`
-        } else {
+    if (stand === false) {
+        systemScore.textContent = `system: ${system.score - system.hiddenPoints}`
+        systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[0]}' class='w-25'/>`
+        systemCards.innerHTML += `<img src='./assets/images/cards/hidden-card.png' class='w-25'/>`
+    } else {
+        for (let i = 0; i < system.cards.length; i++) {
+            systemScore.textContent = `system: ${system.score}`
             systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[i]}' class='w-25'/>`
         }
     }
 }
 
 hitButton.addEventListener("click", function() {
-    player.cards.push(hit(player))
-    render()
+    hit(player)
+    render(false)
 })
 
-player.cards.push(hit(player))
-player.cards.push(hit(player))
-system.cards.push(hit(system))
-system.cards.push(hit(system))
+standButton.addEventListener("click", function() {
+    stand()
+})
 
-render()
-
-systemScore.innerHTML += ` -- ${system.cards}`
+// setup game
+hit(player)
+hit(player)
+hit(system)
+hit(system)
+render(false)
