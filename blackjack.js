@@ -146,7 +146,28 @@ function render(stand) {
 }
 
 function setup() {
+    usedCards = []
+
     restartButton.classList.add("d-none")
+
+    alertContainer.innerHTML = ""
+
+    hitButton.removeAttribute("disabled")
+    hitButton.style.opacity = 1
+    standButton.removeAttribute("disabled")
+    standButton.style.opacity = 1
+
+    player = {
+        score: 0,
+        cards: [],
+        aceEleven: 0 
+    }
+    system = {
+        score: 0,
+        hiddenPoints: 0,
+        cards: [],
+        aceEleven: 0 
+    }
     
     hit(player)
     hit(player)
