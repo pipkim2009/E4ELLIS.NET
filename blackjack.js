@@ -1,10 +1,14 @@
 const playerScore = document.getElementById("player-score")
 const systemScore = document.getElementById("system-score")
 const hitButton = document.getElementById("hit-button")
+const restartButton = document.getElementById("restart-button")
 const standButton = document.getElementById("stand-button")
 const playerCards = document.getElementById("player-cards")
 const systemCards = document.getElementById("system-cards")
 const alertContainer = document.getElementById("alert-container")
+const playButton = document.getElementById("play-button")
+const playDisplay = document.getElementById("play-display")
+const gameDisplay = document.getElementById("game-display")
 
 const values = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "10", "j", "q", "k"]
 const suits = ["c", "d", "h", "s"]
@@ -38,7 +42,7 @@ function hit(user) {
     }
 
     let points = 0
-    
+
     if (!isNaN(parseInt(value))) {
         points += parseInt(value)
     }
@@ -66,6 +70,7 @@ function hit(user) {
     }
 
     user.cards.push(card)
+    winCheck()
 }
 
 function stand() {
@@ -75,6 +80,39 @@ function stand() {
     } else {
         render(true)
     }
+}
+
+function winCheck(stand) {
+
+    // not stand
+    if (stand === false) {
+        if (player.score === 21) {
+            restartButton.classList.remove("d-none")
+            return({result: true, win: true, message: "You win, you got blackjack"})
+        }
+        if (player.score > 21) {
+            restartButton.classList.remove("d-none")
+            return({result: true, win: false, message: "You've gone bust!"})
+        }
+    }
+
+    // stand
+    if (stand === true) {
+        if (system.score > 21) {
+            restartButton.classList.remove("d-none")
+            return({result: true, win: true, message: "You win, system has gone bust!"})
+        } else if (player.score > system.score) {
+            restartButton.classList.remove("d-none")
+            return({result: true, win: true, message: "You win, you beat the system!"})
+        } else if (player.score === system.score) {
+            restartButton.classList.remove("d-none")
+            return({result: true, win: false, message: "You draw, it's a push!"})
+        } else {
+            restartButton.classList.remove("d-none")
+            return({result: true, win: false, message: "You lose, the system beat you!"})
+        }
+    }
+    return({result: false})
 }
 
 function render(stand) {
@@ -94,12 +132,27 @@ function render(stand) {
             systemScore.textContent = `system: ${system.score}`
             systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[i]}' class='w-25'/>`
         }
+    }
 
+    let winObj = winCheck(stand)
+
+    if (winObj.result === true) {
+        alertContainer.innerHTML = `<div class='alert alert-primary' role='alert'>${winObj.message}</div>`
         hitButton.setAttribute("disabled", "")
         hitButton.style.opacity = 0.5
         standButton.setAttribute("disabled", "")
         standButton.style.opacity = 0.5
     }
+}
+
+function setup() {
+    restartButton.classList.add("d-none")
+    
+    hit(player)
+    hit(player)
+    hit(system)
+    hit(system)
+    render(false)
 }
 
 hitButton.addEventListener("click", function() {
@@ -111,9 +164,12 @@ standButton.addEventListener("click", function() {
     stand()
 })
 
-// setup game
-hit(player)
-hit(player)
-hit(system)
-hit(system)
-render(false)
+playButton.addEventListener("click", function() {
+    playDisplay.classList.add("d-none")
+    gameDisplay.classList.remove("d-none")
+    setup()
+})
+
+restartButton.addEventListener("click", function() {
+    setup()
+})

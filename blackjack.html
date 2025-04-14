@@ -17,19 +17,45 @@
             <a class="navbar-brand fw-bold text-white" href="index.html">E4Ellis.net</a>
         </nav>
 
-        <!-- Content -->
-        <section class="bg-success container-fluid">
-            <h1 class="text-primary fw-bold text-center">BlackJack</h1>
+        <!-- Play Display -->
+        <section id="play-display" class="bg-light container-fluid p-3">
+            <h1 class="text-dark fw-bold text-center fs-1 text-decoration-underline">BlackJack</h1>
+            <button id="play-button" class="btn btn-primary mx-auto p-3 mt-3 fs-2 d-block">Play</button>
+            <button class="btn btn-danger mx-auto p-3 mt-3 fs-2 d-block" type="button" data-bs-toggle="collapse" data-bs-target="#house-rules-infomation" aria-expanded="false" aria-controls="collapseExample">House Rules</button>
+            <div id="house-rules-infomation" class="collapse card bg-dark text-warning p-3">
+                •	The objective is to beat the system (dealer) by having a hand value as close to 21 as possible without going over.<br />
+                •	Cards 2 through 10 are worth their face value.<br />
+                •	J, Q, and K are each worth 10 points.<br />
+                •	Aces are worth 1 or 11, whichever is more favorable to the player or dealer.<br />
+                •	Both player and system are dealt two cards at the start.<br />
+                •	The system’s second card is hidden until the player stands or busts.<br />
+                •	The player may hit to draw additional cards or stand to keep their total.<br />
+                •	If the player’s total exceeds 21, they go bust and lose immediately.<br />
+                •	If the player hits 21, they automatically win unless the system also has 21.<br />
+                •	The system (dealer) must hit until reaching at least 17.<br />
+                •	The dealer stands on soft 17 (Ace + 6).<br />
+                •	If the dealer busts, the player wins.<br />
+                •	If both player and system remain under 22, the higher total wins.<br />
+                •	If player and system tie, the result is a push (draw).<br />
+                •	If both player and system have Blackjack (21 on first two cards), the result is a push.<br />
+                •	There is no special win for holding 5 cards — “5 Card Charlie” rule is not in effect.<br />
+            </div>
+        </section>
+
+        <!-- Game Display -->
+        <section id="game-display" class="bg-light container-fluid p-3 d-none">
+            <h1 class="text-dark fw-bold text-center fs-1 text-decoration-underline">BlackJack</h1>
             <div id="alert-container"></div>
             <div class="row justify-content-evenly">
-                <h2 id="player-score" class="col-6 text-center text-light w-25 fw-bold">You: 0</h2>
-                <h2 id="system-score" class="col-6 text-center text-light w-25 fw-bold">System: 0</h2>
+                <button id="hit-button" class="col-4 button bg-primary w-25 fs-1 text-light">Hit</button>
+                <button id="restart-button" class="col-4 button bg-warning w-25 fs-1 text-light d-none">Restart</button>
+                <button id="stand-button" class="col-4 button bg-danger w-25 fs-1 text-light" >Stand</button>
             </div>
-            <div class="row justify-content-evenly">
-                <button id="hit-button" class="col-6 button bg-warning w-25 fs-1">Hit</button>
-                <button id="stand-button" class="col-6 button bg-primary w-25 fs-1">Stand</button>
-            </div>
+
+            <h2 id="player-score" class="col-6 mx-auto text-center text-dark w-25 fw-bold">You: 0</h2>
             <div id="player-cards" class="row justify-content-center p-1 pb-3"></div>
+
+            <h2 id="system-score" class="col-6 mx-auto text-center text-dark w-25 fw-bold">System: 0</h2>
             <div id="system-cards" class="row justify-content-center p-1"></div>
         </section>
 
