@@ -21,13 +21,13 @@
         <section class="bg-success container-fluid">
             <h1 class="text-primary fw-bold text-center">BlackJack</h1>
             <div id="alert-container"></div>
-            <div class="row">
-                <h2 class="col-6 text-center" id="player-score">You: 0</h2>
-                <h2 class="col-6 text-center" id="system-score">System: 0</h2>
+            <div class="row justify-content-evenly">
+                <h2 id="player-score" class="col-6 text-center text-light w-25 fw-bold">You: 0</h2>
+                <h2 id="system-score" class="col-6 text-center text-light w-25 fw-bold">System: 0</h2>
             </div>
             <div class="row justify-content-evenly">
-                <button id="hit-button" class="button bg-warning w-25 col-6 fs-1">Hit</button>
-                <button id="stand-button" class="button bg-primary w-25 col-6 fs-1">Stand</button>
+                <button id="hit-button" class="col-6 button bg-warning w-25 fs-1">Hit</button>
+                <button id="stand-button" class="col-6 button bg-primary w-25 fs-1">Stand</button>
             </div>
             <div id="player-cards" class="row justify-content-center p-1 pb-3"></div>
             <div id="system-cards" class="row justify-content-center p-1"></div>

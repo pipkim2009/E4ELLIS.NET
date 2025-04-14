@@ -12,13 +12,15 @@ let usedCards = []
 
 let player = {
     score: 0,
-    cards: []
+    cards: [],
+    aceEleven: 0 
 }
 
 let system = {
     score: 0,
     hiddenPoints: 0,
-    cards: []
+    cards: [],
+    aceEleven: 0 
 }
 
 function hit(user) {
@@ -36,24 +38,28 @@ function hit(user) {
     }
 
     let points = 0
-    // card is number
+    
     if (!isNaN(parseInt(value))) {
         points += parseInt(value)
     }
-    // card is royal
     else if (value != "a") {
         points = 10
     }
-    // card is ace
     else {
         if (user.score <= 10) {
             points = 11
+            user.aceEleven++
         } else {
             points = 1
         }
     }
 
     user.score += points
+
+    if ((user.score > 21) && (user.aceEleven != 0)) {
+        user.score += -10
+        user.aceEleven--
+    }
 
     if ((user === system) && (system.cards.length != 0)) {
         system.hiddenPoints += points
@@ -88,6 +94,11 @@ function render(stand) {
             systemScore.textContent = `system: ${system.score}`
             systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[i]}' class='w-25'/>`
         }
+
+        hitButton.setAttribute("disabled", "")
+        hitButton.style.opacity = 0.5
+        standButton.setAttribute("disabled", "")
+        standButton.style.opacity = 0.5
     }
 }
 
