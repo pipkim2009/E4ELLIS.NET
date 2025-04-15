@@ -49,20 +49,23 @@
         <section id="game-display" class="bg-light container-fluid p-3 d-none">
             <h1 class="text-dark fw-bold text-center fs-1 text-decoration-underline">BlackJack</h1>
             <div id="alert-container"></div>
+
             <div class="row justify-content-evenly">
                 <button id="hit-button" class="col-4 button bg-primary w-25 fs-2 text-center text-light">Hit</button>
                 <button id="restart-button" class="col-4 button bg-warning w-25 fs-2 text-center d-none">Restart</button>
                 <button id="stand-button" class="col-4 button bg-danger w-25 fs-2 text-center text-light">Stand</button>
             </div>
-
+    
             <div class="row justify-content-evenly">
-                <h2 id="player-score" class="col-6 mx-auto text-center text-dark w-25 fw-bold">You: 0</h2>
-                <h2 id="system-score" class="col-6 mx-auto text-center text-dark w-25 fw-bold">System: 0</h2>
-            </div>
+                <div class="col-12 col-sm-6">
+                    <h2 id="player-score" class="mx-auto text-center text-dark w-100 w-md-50 fw-bold">You: 0</h2>
+                    <div id="player-cards" class="d-flex align-items-center justify-content-center m-xl-5" style="position: relative; height: 200px;"></div>
+                </div>
 
-            <div class="row justify-content-evenly m-5">
-                <div id="player-cards" class="col-6 d-flex align-items-center justify-content-center" style="position: relative; height: 200px;"></div>
-                <div id="system-cards" class="col-6 d-flex align-items-center justify-content-center" style="position: relative; height: 200px;"></div>
+                <div class="col-12 col-md-6">
+                    <h2 id="system-score" class="mx-auto text-center text-dark w-100 w-md-50 fw-bold">System: 0</h2>
+                    <div id="system-cards" class="d-flex align-items-center justify-content-center m-xl-5" style="position: relative; height: 200px;"></div>
+                </div>
             </div>
 
             <p class="text-center pt-3">NOTE: This is an beta for the full release of BlackJack coded in pure JavaScript on E4Ellis.net.<br />

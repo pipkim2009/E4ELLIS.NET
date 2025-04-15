@@ -93,7 +93,7 @@ function winCheck(stand) {
         }
         if (player.score > 21) {
             restartButton.classList.remove("d-none")
-            return({result: true, win: false, message: "You've gone bust!"})
+            return({result: true, win: false, message: "You lose, you've gone bust!"})
         }
     }
 
