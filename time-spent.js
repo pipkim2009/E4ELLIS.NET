@@ -1,23 +1,30 @@
 const randomFunFact = document.getElementById("random-fun-fact")
 
 const startTime = new Date()
-let timeSpent = 0
+const previousTimeSpent = parseInt(localStorage.getItem("totalTimeSpent"))
+let sessionTimeSpent = 0
 let timeText = ''
+
 setInterval(timeSpentRefresh, 1)
 
 function timeSpentRefresh() {
-    timeSpent = Math.floor(((new Date) - startTime) / 1000)
-    if (timeSpent < 60) {
-        timeText = `${timeSpent} seconds`
-    } else if (timeSpent < 3600) {
-        timeText = `${Math.floor(timeSpent/60)} minutes and ${timeSpent%60} seconds`
+    sessionTimeSpent = Math.floor(((new Date) - startTime) / 1000)
+
+    let totalTimeSpent = sessionTimeSpent + previousTimeSpent
+
+    if (totalTimeSpent < 60) {
+        timeText = `${totalTimeSpent} seconds`
+    } else if (totalTimeSpent < 3600) {
+        timeText = `${Math.floor(totalTimeSpent/60)} minutes and ${totalTimeSpent%60} seconds`
     } else {
-        timeText = `${Math.floor(timeSpent/3600)} hours, ${Math.floor((timeSpent%3600)/60)} minutes and ${timeSpent%60} seconds`
+        timeText = `${Math.floor(totalTimeSpent/3600)} hours, ${Math.floor((totalTimeSpent%3600)/60)} minutes and ${totalTimeSpent%60} seconds`
     }
 
-    randomFunFact.textContent = `You have spent ${timeText} on E4Ellis.net.`
+    randomFunFact.textContent = `You have spent ${timeText} watching this cow Moo!`
 
-    if (timeSpent >= 120) {
+    if (totalTimeSpent >= 120) {
         randomFunFact.innerHTML += ` <span class="badge bg-warning">WOW You need help!</span>`
     }
+
+    localStorage.setItem("totalTimeSpent", totalTimeSpent)
 }

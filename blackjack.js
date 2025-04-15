@@ -17,14 +17,16 @@ let usedCards = []
 let player = {
     score: 0,
     cards: [],
-    aceEleven: 0 
+    aceEleven: 0,
+    stackRotate: 0
 }
 
 let system = {
     score: 0,
     hiddenPoints: 0,
     cards: [],
-    aceEleven: 0 
+    aceEleven: 0,
+    stackRotate: 0
 }
 
 function hit(user) {
@@ -83,7 +85,6 @@ function stand() {
 }
 
 function winCheck(stand) {
-
     // not stand
     if (stand === false) {
         if (player.score === 21) {
@@ -118,26 +119,30 @@ function winCheck(stand) {
 function render(stand) {
     playerCards.innerHTML = ''
     playerScore.textContent = `player: ${player.score}`
+    player.stackRotate = 0
     for (let i = 0; i < player.cards.length; i++) {
-        playerCards.innerHTML += `<img src='./assets/images/cards/${player.cards[i]}' class='w-25'/>`
+        playerCards.innerHTML += `<img src='./assets/images/cards/${player.cards[i]}' class='w-25' style='transform: rotate(${player.stackRotate}deg); position: absolute;'/>`
+        player.stackRotate += 15
     }
 
     systemCards.innerHTML = ''
+    system.stackRotate = 0
     if (stand === false) {
         systemScore.textContent = `system: ${system.score - system.hiddenPoints}`
-        systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[0]}' class='w-25'/>`
-        systemCards.innerHTML += `<img src='./assets/images/cards/hidden-card.png' class='w-25'/>`
+        systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[0]}' class='w-25' style='position: absolute;'/>`
+        systemCards.innerHTML += `<img src='./assets/images/cards/hidden-card.png' class='w-25' style='transform: rotate(10deg); position: absolute;'/>`
     } else {
         for (let i = 0; i < system.cards.length; i++) {
             systemScore.textContent = `system: ${system.score}`
-            systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[i]}' class='w-25'/>`
+            systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[i]}' class='w-25' style='transform: rotate(${system.stackRotate}deg); position: absolute;'/>`
+            system.stackRotate += 15
         }
     }
 
     let winObj = winCheck(stand)
 
     if (winObj.result === true) {
-        alertContainer.innerHTML = `<div class='alert alert-primary' role='alert'>${winObj.message}</div>`
+        alertContainer.innerHTML = `<div class='alert alert-primary fs-2' role='alert'>${winObj.message}</div>`
         hitButton.setAttribute("disabled", "")
         hitButton.style.opacity = 0.5
         standButton.setAttribute("disabled", "")
@@ -168,7 +173,7 @@ function setup() {
         cards: [],
         aceEleven: 0 
     }
-    
+
     hit(player)
     hit(player)
     hit(system)
