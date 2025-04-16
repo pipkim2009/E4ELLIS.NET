@@ -130,7 +130,7 @@ function render(stand) {
     if (stand === false) {
         systemScore.textContent = `system: ${system.score - system.hiddenPoints}`
         systemCards.innerHTML += `<img src='./assets/images/cards/${system.cards[0]}' class='w-25' style='position: absolute;'/>`
-        systemCards.innerHTML += `<img src='./assets/images/cards/hidden-card.png' class='w-25' style='transform: rotate(10deg); position: absolute;'/>`
+        systemCards.innerHTML += `<img src='./assets/images/cards/hidden-card.png' class='w-25' style='transform: rotate(15deg); position: absolute;'/>`
     } else {
         for (let i = 0; i < system.cards.length; i++) {
             systemScore.textContent = `system: ${system.score}`
