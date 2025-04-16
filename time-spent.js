@@ -1,7 +1,7 @@
 const randomFunFact = document.getElementById("random-fun-fact")
 
 const startTime = new Date()
-const previousTimeSpent = parseInt(localStorage.getItem("totalTimeSpent"))
+const previousTimeSpent = parseInt(localStorage.getItem("totalTimeSpent")) || 0 // if fails set 0
 let sessionTimeSpent = 0
 let timeText = ''
 

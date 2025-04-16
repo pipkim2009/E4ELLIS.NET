@@ -178,7 +178,8 @@ function setup() {
     hit(player)
     hit(system)
     hit(system)
-    render(false)
+
+    setTimeout(() => render(false), 50)
 }
 
 hitButton.addEventListener("click", function() {
