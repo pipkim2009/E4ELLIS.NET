@@ -165,13 +165,15 @@ function setup() {
     player = {
         score: 0,
         cards: [],
-        aceEleven: 0 
+        aceEleven: 0,
+        stackRotate: 0
     }
     system = {
         score: 0,
         hiddenPoints: 0,
         cards: [],
-        aceEleven: 0 
+        aceEleven: 0,
+        stackRotate: 0
     }
 
     hit(player)
@@ -179,7 +181,7 @@ function setup() {
     hit(system)
     hit(system)
 
-    setTimeout(() => render(false), 50)
+    render(false)
 }
 
 hitButton.addEventListener("click", function() {
